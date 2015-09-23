@@ -286,7 +286,6 @@ void LabelView::setUF()
         uf->uni(lastId,tempId);
         lastId = tempId;
     }
-    qDebug()<<"set uf ... ok"<< endl;
 }
 
 void LabelView::formatDCEL()
@@ -322,38 +321,15 @@ void LabelView::formatDCEL()
 void LabelView::areaVoronoi()
 {
     setUF();
-//    vector<vector<int>> category;
-//    // set categories id
-//    set<int> cate;
-//    for(int i=0;i<points.size();i++)
-//        cate.insert(uf->find(i));
-//    // set index for every category
-//    set<int>::iterator it;
-//    for(it = cate.begin();it != cate.end(); it++)
-//    {
-//        vector<int> tmp;
-//        for(int i = 0 ; i < points.size() ; i++)
-//            if(uf->find(i) == *it)
-//                tmp.push_back(i);
-//        category.push_back(tmp);
-//    }
-//    for(int i = 0; i<category.size() ;i++)
-//    {
-
-//    }
-
     Edge *e = dcel->edge;
     while(e->next)
     {
-        qDebug() <<"e face"<< e->next->f->f.x() << e->next->f->f.y()<<endl;
         int id1 = getPointsId(e->next->f->f);
-        qDebug() <<"e twin face"<< e->next->twin->f->f.x()<< e->next->twin->f->f.y()<<endl;
         int id2 = getPointsId(e->next->twin->f->f);
         if(uf->find(id1) == uf->find(id2))
             dcel->delEdgeCouple(e->next);
         e = e->next;
     }
-    qDebug()<<"area voronoi ... done"<<endl;
 }
 
 int LabelView::getPointsId(QPointF p)
